@@ -1,5 +1,8 @@
 package com.example.christopher.magicball;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +11,9 @@ import android.widget.TextView;
 public class BallActivity extends AppCompatActivity {
 
     private String[] phrase = new String[20];
+    private ShakeDetector mShakeDetector;
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +46,28 @@ public class BallActivity extends AppCompatActivity {
         phrase[18] = "Very doubtful";
         phrase[19] = "Outlook good";
 
-        TextView tv = findViewById(R.id.magic_phrase);
-        tv.setText(phrase[(int)Math.floor(Math.random()* 20)]);
+        // ShakeDetector initialization
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeDetector = new ShakeDetector(new ShakeDetector.OnShakeListener() {
+            @Override
+            public void onShake() {
+                // Do stuff!
+                TextView tv = findViewById(R.id.magic_phrase);
+                tv.setText(phrase[(int)Math.floor(Math.random()* 20)]);
+            }
+        });
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    protected void onPause() {
+        mSensorManager.unregisterListener(mShakeDetector);
+        super.onPause();
     }
 }
 
