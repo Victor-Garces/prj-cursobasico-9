@@ -1,16 +1,21 @@
 package com.example.christopher.magicball;
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class BallActivity extends AppCompatActivity {
+import org.w3c.dom.Text;
 
-    private String[] phrase = new String[20];
+import java.util.Locale;
+
+public class BallActivity extends AppCompatActivity  {
+
     private ShakeDetector mShakeDetector;
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
@@ -25,26 +30,9 @@ public class BallActivity extends AppCompatActivity {
         decorView.setSystemUiVisibility(uiOptions);
         getSupportActionBar().hide();
 
-        phrase[0] = "It is certain";
-        phrase[1] = "It is decidedly so";
-        phrase[2] = "Without a doubt";
-        phrase[3] = "Yes definitely";
-        phrase[4] = "You may rely on it";
-        phrase[5] = "As I see it, yes";
-        phrase[6] = "Most likely";
-        phrase[7] = "Yes";
-        phrase[8] = "Signs point to yes";
-        phrase[9] = "Reply hazy try again";
-        phrase[10] = "Ask again later";
-        phrase[11] = "Better not tell you now";
-        phrase[12] = "Cannot predict now";
-        phrase[13] = "Concentrate and ask again";
-        phrase[14] = "Don't count on it";
-        phrase[15] = "My reply is no";
-        phrase[16] = "My sources say no";
-        phrase[17] = "Outlook not so good";
-        phrase[18] = "Very doubtful";
-        phrase[19] = "Outlook good";
+        Intent receivedIntent = getIntent();
+        final Bundle b = receivedIntent.getBundleExtra("Phrase");
+        b.getStringArray("");
 
         // ShakeDetector initialization
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -53,8 +41,16 @@ public class BallActivity extends AppCompatActivity {
             @Override
             public void onShake() {
                 // Do stuff!
-                TextView tv = findViewById(R.id.magic_phrase);
-                tv.setText(phrase[(int)Math.floor(Math.random()* 20)]);
+                final TextView tv = findViewById(R.id.magic_phrase);
+                tv.setText(b.getStringArray("frase")[(int)Math.floor(Math.random()* 20)]);
+//                TextToSpeech tts = new TextToSpeech(BallActivity.this, new TextToSpeech.OnInitListener() {
+//                    @Override
+//                    public void onInit(int i) {
+//                        tv.getText();
+//                    }
+//                });
+
+
             }
         });
     }
