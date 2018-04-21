@@ -56,8 +56,8 @@ public class BallActivity extends AppCompatActivity  {
                                 Log.e("TTS","Language not supported");
                             }
                             else {
-                                tts.setPitch(0.01f);
-                                tts.setSpeechRate(0.01f);
+                                tts.setPitch(0.001f);
+                                tts.setSpeechRate(0.001f);
                                 tts.speak((String) tv.getText(),TextToSpeech.QUEUE_FLUSH,null);
                             }
                         }

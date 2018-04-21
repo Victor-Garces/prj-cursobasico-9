@@ -7,13 +7,13 @@ import android.hardware.SensorEventListener;
 public class ShakeDetector implements SensorEventListener {
 
     // Minimum acceleration needed to count as a shake movement
-    private static final int MIN_SHAKE_ACCELERATION = 7;
+    private static final int MIN_SHAKE_ACCELERATION = 15;
 
     // Minimum number of movements to register a shake
     private static final int MIN_MOVEMENTS = 4;
 
     // Maximum time (in milliseconds) for the whole shake to occur
-    private static final int MAX_SHAKE_DURATION = 750;
+    private static final int MAX_SHAKE_DURATION = 1000;
 
     // Arrays to store gravity and linear acceleration values
     private float[] mGravity = { 0.0f, 0.0f, 0.0f };
