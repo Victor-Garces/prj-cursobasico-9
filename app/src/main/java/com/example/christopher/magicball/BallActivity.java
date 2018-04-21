@@ -7,15 +7,14 @@ import android.hardware.SensorManager;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.util.Locale;
 
-public class BallActivity extends AppCompatActivity  {
 
+public class BallActivity extends AppCompatActivity  {
+    TextToSpeech tts;
     private ShakeDetector mShakeDetector;
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
@@ -32,7 +31,7 @@ public class BallActivity extends AppCompatActivity  {
 
         Intent receivedIntent = getIntent();
         final Bundle b = receivedIntent.getBundleExtra("Phrase");
-        b.getStringArray("");
+        b.getStringArray("frase");
 
         // ShakeDetector initialization
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -43,12 +42,30 @@ public class BallActivity extends AppCompatActivity  {
                 // Do stuff!
                 final TextView tv = findViewById(R.id.magic_phrase);
                 tv.setText(b.getStringArray("frase")[(int)Math.floor(Math.random()* 20)]);
-//                TextToSpeech tts = new TextToSpeech(BallActivity.this, new TextToSpeech.OnInitListener() {
-//                    @Override
-//                    public void onInit(int i) {
-//                        tv.getText();
-//                    }
-//                });
+
+                tts = new TextToSpeech(BallActivity.this, new TextToSpeech.OnInitListener() {
+                    @Override
+                    public void onInit(int status) {
+                        if(status == TextToSpeech.SUCCESS)
+                        {
+                            int result = tts.setLanguage(Locale.ENGLISH);
+
+                            if(result == TextToSpeech.LANG_MISSING_DATA
+                                    || result == TextToSpeech.LANG_NOT_SUPPORTED)
+                            {
+                                Log.e("TTS","Language not supported");
+                            }
+                            else {
+                                tts.setPitch(0.01f);
+                                tts.setSpeechRate(0.01f);
+                                tts.speak((String) tv.getText(),TextToSpeech.QUEUE_FLUSH,null);
+                            }
+                        }
+                        else{
+                            Log.e("TTS","Initialization failed");
+                        }
+                    }
+                });
 
 
             }
