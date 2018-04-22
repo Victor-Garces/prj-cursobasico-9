@@ -53,7 +53,7 @@ public class BallActivity extends AppCompatActivity  {
                             if(result == TextToSpeech.LANG_MISSING_DATA
                                     || result == TextToSpeech.LANG_NOT_SUPPORTED)
                             {
-                                Log.e("TTS","Language not supported");
+                                Log.e("TTS ","Language not supported");
                             }
                             else {
                                 tts.setPitch(0.001f);
