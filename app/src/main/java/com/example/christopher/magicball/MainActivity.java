@@ -1,6 +1,8 @@
 package com.example.christopher.magicball;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,13 +20,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ImageView startButton = findViewById(R.id.start_button);
         startButton.setOnClickListener(this);
     }
-
     @Override
     public void onClick(View view) {
         Bundle b = new Bundle();
         Intent intent = new Intent(this,BallActivity.class);
         b.putStringArray("phrase",utilities.fillComboPhrases());
         intent.putExtra("Key",b);
-        startActivity(intent);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        }else {
+            startActivity(intent);
+        }
     }
 }

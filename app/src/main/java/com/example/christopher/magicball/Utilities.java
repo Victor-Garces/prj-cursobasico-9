@@ -1,15 +1,20 @@
 package com.example.christopher.magicball;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-/**
- * Created by Christopher on 22/4/18.
- */
 
 public class Utilities {
 
     public String[] phrase = new String[20];
+    public String magicTextMessage;
+    private ImageView imageView;
+    private TextView magicMessage;
+    long animationDuration = 500;
 
     public void hideToolbar(Activity context)
     {
@@ -43,4 +48,23 @@ public class Utilities {
         return phrase;
     }
 
+    public void ballMovement(Activity context) throws InterruptedException {
+        imageView = context.findViewById(R.id.black_ball);
+        ObjectAnimator animatorX = ObjectAnimator.ofFloat(imageView,"x",200f);
+        animatorX.setDuration(animationDuration);
+        animatorX.setRepeatMode(ObjectAnimator.REVERSE);
+        animatorX.setRepeatCount(3);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(animatorX);
+        animatorSet.start();
+    }
+
+    public String magicPhraseGenerator(Activity context)
+    {
+        magicMessage = context.findViewById(R.id.magic_phrase);
+        magicMessage.setText(fillComboPhrases()[(int)Math.floor(Math.random()* 20)]);
+        magicTextMessage = (String) magicMessage.getText();
+        return magicTextMessage;
+    }
 }
+
