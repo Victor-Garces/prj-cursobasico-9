@@ -8,22 +8,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-public class Utilities {
+class Utilities {
 
-    public String[] phrase = new String[20];
-    public String magicTextMessage;
-    private ImageView imageView;
+    private String[] phrase = new String[20];
     private TextView magicMessage;
-    long animationDuration = 500;
+    private int animationDuration = 500;
+    private int possibilityPhrases = 20;
+    private float movementDistance = 300f;
+    private short repeatCount = 3;
 
-    public void hideToolbar(Activity context)
+    void hideToolbar(Activity context)
     {
         View decorView = context.getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
     }
 
-    public String[] fillComboPhrases()
+    String[] fillComboPhrases()
     {
         phrase[0] = "It is certain";
         phrase[1] = "It is decidedly so";
@@ -48,22 +49,22 @@ public class Utilities {
         return phrase;
     }
 
-    public void ballMovement(Activity context) throws InterruptedException {
-        imageView = context.findViewById(R.id.black_ball);
-        ObjectAnimator animatorX = ObjectAnimator.ofFloat(imageView,"x",200f);
+    void ballMovement(Activity context) throws InterruptedException {
+        ImageView imageView = context.findViewById(R.id.black_ball);
+        ObjectAnimator animatorX = ObjectAnimator.ofFloat(imageView,"x",movementDistance);
         animatorX.setDuration(animationDuration);
         animatorX.setRepeatMode(ObjectAnimator.REVERSE);
-        animatorX.setRepeatCount(3);
+        animatorX.setRepeatCount(repeatCount);
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(animatorX);
         animatorSet.start();
     }
 
-    public String magicPhraseGenerator(Activity context)
+    String magicPhraseGenerator(Activity context)
     {
         magicMessage = context.findViewById(R.id.magic_phrase);
-        magicMessage.setText(fillComboPhrases()[(int)Math.floor(Math.random()* 20)]);
-        magicTextMessage = (String) magicMessage.getText();
+        magicMessage.setText(fillComboPhrases()[(int)Math.floor(Math.random()* possibilityPhrases)]);
+        String magicTextMessage = (String) magicMessage.getText();
         return magicTextMessage;
     }
 }

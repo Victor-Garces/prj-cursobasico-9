@@ -1,7 +1,6 @@
 package com.example.christopher.magicball;
 
 import android.content.Context;
-import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.speech.tts.TextToSpeech;
@@ -14,7 +13,6 @@ import java.util.Locale;
 public class BallActivity extends AppCompatActivity {
     Utilities utilities = new Utilities();
     TextToSpeech textToSpeech;
-    private String[] phrase = new String[20];
     private String magicTextMessage;
     private ShakeDetector mShakeDetector;
     private SensorManager mSensorManager;
@@ -26,10 +24,6 @@ public class BallActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ball);
         utilities.hideToolbar(BallActivity.this);
         getSupportActionBar().hide();
-        Intent receivedIntent = getIntent();
-        final Bundle b = receivedIntent.getBundleExtra("Key");
-        phrase = b.getStringArray("phrase");
-
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);

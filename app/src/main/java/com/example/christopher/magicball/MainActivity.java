@@ -22,10 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     @Override
     public void onClick(View view) {
-        Bundle b = new Bundle();
         Intent intent = new Intent(this,BallActivity.class);
-        b.putStringArray("phrase",utilities.fillComboPhrases());
-        intent.putExtra("Key",b);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         }else {
