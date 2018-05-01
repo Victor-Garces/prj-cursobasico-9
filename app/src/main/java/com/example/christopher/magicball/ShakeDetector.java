@@ -7,10 +7,10 @@ import android.hardware.SensorEventListener;
 public class ShakeDetector implements SensorEventListener {
 
     // Minimum acceleration needed to count as a shake movement
-    private static final int MIN_SHAKE_ACCELERATION = 11;
+    private static final int MIN_SHAKE_ACCELERATION = 9;
 
     // Minimum number of movements to register a shake
-    private static final int MIN_MOVEMENTS = 4;
+    private static final int MIN_MOVEMENTS = 3;
 
     // Maximum time (in milliseconds) for the whole shake to occur
     private static final int MAX_SHAKE_DURATION = 1000;
@@ -28,13 +28,13 @@ public class ShakeDetector implements SensorEventListener {
     private OnShakeListener mShakeListener;
 
     // Start time for the shake detection
-    long startTime = 0;
+    private long startTime = 0;
 
     // Counter for shake movements
-    int moveCount = 0;
+    private int moveCount = 0;
 
     // Constructor that sets the shake listener
-    public ShakeDetector(OnShakeListener shakeListener) {
+    ShakeDetector(OnShakeListener shakeListener) {
         mShakeListener = shakeListener;
     }
 
@@ -141,6 +141,6 @@ public class ShakeDetector implements SensorEventListener {
 
     // (I'd normally put this definition in it's own .java file)
     public interface OnShakeListener {
-        public void onShake() throws InterruptedException;
+         void onShake() throws InterruptedException;
     }
 }

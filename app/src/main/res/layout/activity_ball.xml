@@ -11,8 +11,16 @@
         android:id="@+id/black_ball"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ball_background" />
+        android:src="@mipmap/ball_background"
+        android:contentDescription="@string/contentDescriptionBall"/>
 
+    <ImageView
+        android:id="@+id/shake_it"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:src="@drawable/shake_it_label"
+        android:contentDescription="@string/contentDescriptionLabel"/>
     <TextView
         android:id="@+id/magic_phrase"
         android:layout_width="wrap_content"

@@ -24,7 +24,7 @@ class Utilities {
         decorView.setSystemUiVisibility(uiOptions);
     }
 
-    String[] fillComboPhrases()
+    public String[] fillComboPhrases()
     {
         phrase[0] = "It is certain";
         phrase[1] = "It is decidedly so";
@@ -49,7 +49,9 @@ class Utilities {
         return phrase;
     }
 
-    void ballMovement(Activity context) throws InterruptedException {
+    void ballMovement(Activity context) {
+        ImageView shakeItLabel = context.findViewById(R.id.shake_it);
+        shakeItLabel.setVisibility(View.INVISIBLE);
         ImageView imageView = context.findViewById(R.id.black_ball);
         ObjectAnimator animatorX = ObjectAnimator.ofFloat(imageView,"x",movementDistance);
         animatorX.setDuration(animationDuration);
@@ -60,12 +62,11 @@ class Utilities {
         animatorSet.start();
     }
 
-    String magicPhraseGenerator(Activity context)
+    String magicPhraseGenerator(Activity context,String[] phrases)
     {
         magicMessage = context.findViewById(R.id.magic_phrase);
-        magicMessage.setText(fillComboPhrases()[(int)Math.floor(Math.random()* possibilityPhrases)]);
-        String magicTextMessage = (String) magicMessage.getText();
-        return magicTextMessage;
+        magicMessage.setText(phrases[(int)Math.floor(Math.random()* possibilityPhrases)]);
+        return (String) magicMessage.getText();
     }
 }
 

@@ -7,6 +7,7 @@ import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+
 import java.util.Locale;
 
 
@@ -23,15 +24,16 @@ public class BallActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ball);
         utilities.hideToolbar(BallActivity.this);
-        getSupportActionBar().hide();
+        hideActionBar();
+        final String[] magicalPhrases = utilities.fillComboPhrases();
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mAccelerometer = mSensorManager != null ? mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) : null;
         mShakeDetector = new ShakeDetector(new ShakeDetector.OnShakeListener() {
             @Override
-            public void onShake() throws InterruptedException {
+            public void onShake() {
                 utilities.ballMovement(BallActivity.this);
-                magicTextMessage = utilities.magicPhraseGenerator(BallActivity.this);
+                magicTextMessage = utilities.magicPhraseGenerator(BallActivity.this,magicalPhrases);
                 textToSpeech = new TextToSpeech(BallActivity.this, new TextToSpeech.OnInitListener() {
                     @Override
                     public void onInit(int status) {
@@ -64,6 +66,13 @@ public class BallActivity extends AppCompatActivity {
     protected void onPause() {
         mSensorManager.unregisterListener(mShakeDetector);
         super.onPause();
+    }
+
+    private void hideActionBar()
+    {
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if (null != actionBar)
+            actionBar.hide();
     }
 }
 

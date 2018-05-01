@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         utilities.hideToolbar(MainActivity.this);
-        getSupportActionBar().hide();
+        hideActionBar();
         ImageView startButton = findViewById(R.id.start_button);
         startButton.setOnClickListener(this);
     }
@@ -28,5 +28,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else {
             startActivity(intent);
         }
+    }
+    private void hideActionBar()
+    {
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if (null != actionBar)
+            actionBar.hide();
     }
 }
